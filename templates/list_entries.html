@@ -1,0 +1,53 @@
+<!doctype html5>
+<html>
+<head>
+  <title>Entries list</title>
+</head>
+<body>
+  <h2>Entries list</h2>
+  <table width="100%" border="1">
+  <tr>
+    <td>Entry</td>
+    <td>Author</td>
+    <td>Posted</td>
+    <td>Approved</td>
+    <td>Date added</td>
+    <td>Delete</td>
+  </tr>
+  {% for entry in entries %}
+  <tr>
+	<td>{{ entry.entry }}</td>
+	<td>{{ entry.user.username }}</td>
+	<td>{{ entry.posted }}</td>
+	{% if user.admin and not entry.approved %}
+		<form id="approve" action="{{ url_for('list_entries', username=user.username)}}" method="post">
+		<td><input type="checkbox" id="{{ entry.id }}" name="entries" value="{{ entry.id }}"></td>
+	{% else %}
+		<td>{{ entry.approved }}</td>
+	{% endif %}
+	<td>{{ entry.added }}</td>
+	{% if user.admin or entry.user.username == user.username %}
+		<form id="delete" action="{{ url_for('list_entries', username=user.username)}}" method="post">
+		<td><input type="checkbox" id="{{ entry.id }}" name="delete_entries" value="{{ entry.id }}"></td>
+	{% endif %}		
+
+  {% endfor %}
+  </tr>	
+  </table>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  {% if not messages %}
+	<br>
+  	<input type="submit" id="submit" value="Submit" />
+	</form>
+  {% endif %}
+<br><br><br><a href="/">Home<a/>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html5>
+<html>
+<head>
+  <title>Home</title>
+</head>
+<body>
+  <h2>Menu</h2>
+  <ul>
+        <li><a href="/user/{{ username }}/entries/list/">List entries</a></li>
+        <li><a href="/user/{{ username }}/entries/add/">Add entry</a></li>
+	{% if user.admin %}
+		<li><a href="/users/">Users list</a></li>
+	{% endif %}
+        <li><a href="/logout/{{ username }}/">Logout</a></li>
+    </ul>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html5>
+<html>
+<head>
+  <title>Add entry</title>
+</head>
+<body>
+  <h2>Add entry</h2>
+  <form id="add_entry" action="{{ url_for('add_entries', username=username)}}" method="post">
+    Entry :  <textarea rows="4" cols="50" name="entry">
+		</textarea>
+	<br><br>
+        <input type="submit" id="submit" text="Add entry" />
+  </form>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+<br><a href="{{ url_for('home', username=username) }}">Home<a/>
+</body>
+</html>
